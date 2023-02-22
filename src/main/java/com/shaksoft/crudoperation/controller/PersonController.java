@@ -4,6 +4,8 @@ import com.shaksoft.crudoperation.config.ApiConstants;
 import com.shaksoft.crudoperation.exception.ApiResponse;
 import com.shaksoft.crudoperation.payload.PersonDto;
 import com.shaksoft.crudoperation.service.PersonServiceI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +18,10 @@ import java.util.List;
 public class PersonController {
     @Autowired
     private PersonServiceI personServiceI;
-    //create Person Detail
+
+    private static final Logger log = LoggerFactory.getLogger(PersonController.class);
+
+
 
     /**
      * @author Saurabh
@@ -26,8 +31,12 @@ public class PersonController {
      */
     @PostMapping("/create")
     public ResponseEntity<PersonDto> createPersonDetail(@RequestBody PersonDto personDto){
+
         PersonDto personDetail = this.personServiceI.createPersonDetail(personDto);
+        log.info("person detail {} created",personDetail);
         return new ResponseEntity<PersonDto>(personDetail, HttpStatus.CREATED);
+
+
     }
     //update Person Detail
 
@@ -43,6 +52,7 @@ public class PersonController {
     public ResponseEntity<PersonDto> updatePersonDetail(@RequestBody PersonDto personDto,
                                                         @PathVariable("personId") Long Id){
         PersonDto updatePersonDetail = this.personServiceI.updatePersonDetail(personDto, Id);
+        log.info("person detail {} is updated",updatePersonDetail);
         return new ResponseEntity<PersonDto>(updatePersonDetail,HttpStatus.CREATED);
     }
     /**
@@ -54,6 +64,7 @@ public class PersonController {
     @GetMapping("/personId/{personId}")
     public ResponseEntity<PersonDto> getPersonDetail(@PathVariable("personId") Long Id){
         PersonDto personDetail = this.personServiceI.getPersonDetail(Id);
+        log.info("person detail {} is get",personDetail);
         return new ResponseEntity<PersonDto>(personDetail,HttpStatus.OK);
 
     }
@@ -66,6 +77,7 @@ public class PersonController {
     @GetMapping("/persons")
     public ResponseEntity<List<PersonDto>> getAllPersonDetails(){
         List<PersonDto> allPersonDetails = this.personServiceI.getAllPersonDetails();
+        log.info("all person details list {} is get",allPersonDetails);
         return new ResponseEntity<List<PersonDto>>(allPersonDetails,HttpStatus.OK);
     }
     /**
@@ -77,6 +89,7 @@ public class PersonController {
     @DeleteMapping("/personId/{personId}")
     public ResponseEntity<ApiResponse>deletePersonDetail(@PathVariable("personId") Long Id){
         this.personServiceI.deletePersonDetail(Id);
+        log.info("person id {} is deleted  ",Id);
         return new ResponseEntity<ApiResponse>(new ApiResponse(ApiConstants.DELETED_SUCCESS,true),
                 HttpStatus.OK);
         }
