@@ -11,6 +11,7 @@
 	<groupId>com.shaksoft</groupId>
 	<artifactId>crud-operation</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
 	<name>crud-operation</name>
 	<description>Crud Operation for Spring Boot</description>
 	<properties>
@@ -52,9 +53,15 @@
 		<version>2.0.9</version>
 		<scope>test</scope>
 		</dependency>
-    </dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
 	<build>
+		<finalName>Person-Project</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
